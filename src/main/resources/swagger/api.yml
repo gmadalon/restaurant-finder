@@ -56,7 +56,7 @@ paths:
           required: true        
     
       operationId: getAll
-      summary: Get all cars
+      summary: Get all restaurants
       tags:
         - restaurants-api-controller
       produces:
@@ -86,7 +86,7 @@ paths:
   '/restaurants/{restaurantId}':
     put:
       operationId: update
-      summary: Update a car
+      summary: Update a restaurant
       tags:
         - restaurants-api-controller
       consumes:
@@ -211,7 +211,7 @@ paths:
         - in: query
           name: distance
           type: integer
-          description: max distance from your position       
+          description: max distance from your position (meters)       
       produces:
         - application/json
         
