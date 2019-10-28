@@ -22,8 +22,11 @@ I prepared some other components in my github porfile to create a Microservices 
 I can improve "restaurant-finder" and create a NetflixOSS enviroment with restaurante-finder if you wish.
 
 
-The app was made using api-first concept, so first I created the file /restaurant-finder/src/main/resources/swagger/api.yml, using a maven plugin the controllers and DTOs was generated. That is good to decouple API from your domain.
+The app was made using api-first concept, so first I created the file /restaurant-finder/src/main/resources/swagger/api.yml, using a maven plugin the controllers and DTOs was generated. That is good to decouple API from domain.
 
 The request /restaurants/search is cached, during 2 minutes even a lot os request will perform well.
+
+I choose in memory H2 database, it is easy to start and test application. 
+
 
 
