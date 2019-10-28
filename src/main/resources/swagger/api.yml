@@ -8,17 +8,6 @@ host: serverRoot
 basePath: /v1/
 schemes:
   - https
-componentes:  
-   OAuth2:
-      type: oauth2
-      flows:
-        authorizationCode:
-          authorizationUrl: https://example.com/oauth/authorize
-          tokenUrl: https://example.com/oauth/token
-          scopes:
-            read: Grants read access
-            write: Grants write access
-            admin: Grants access to admin operations
 paths:
   '/restaurants':
     post:
@@ -29,6 +18,10 @@ paths:
       tags:
         - restaurants-api-controller
       parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true        
         - schema:
             $ref: '#/definitions/RestaurantDTO'
           required: true
@@ -56,8 +49,14 @@ paths:
         '500':
           description: Internal Server Error
     get:
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true        
+    
       operationId: getAll
-      summary: Get all restaurants
+      summary: Get all cars
       tags:
         - restaurants-api-controller
       produces:
@@ -87,12 +86,16 @@ paths:
   '/restaurants/{restaurantId}':
     put:
       operationId: update
-      summary: Update a restaurant
+      summary: Update a car
       tags:
         - restaurants-api-controller
       consumes:
         - application/json
       parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true        
         - in: path
           name: restaurantId   # Note the name is the same as in the path
           type: string
@@ -128,6 +131,10 @@ paths:
       tags:
         - restaurants-api-controller
       parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true        
         - in: path
           name: restaurantId   # Note the name is the same as in the path
           required: true
@@ -159,6 +166,10 @@ paths:
       tags:
         - restaurants-api-controller
       parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true        
         - in: path
           name: restaurantId   # Note the name is the same as in the path
           required: true

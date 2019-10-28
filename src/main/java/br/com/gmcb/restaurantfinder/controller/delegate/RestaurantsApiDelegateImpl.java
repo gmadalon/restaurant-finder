@@ -25,7 +25,7 @@ public class RestaurantsApiDelegateImpl implements RestaurantsApiDelegate {
 		this.restaurantRepository = restaurantRepository;
 	}
 	@Override
-	public ResponseEntity<RestaurantDTO> create(RestaurantDTO restaurantDTO) {
+	public ResponseEntity<RestaurantDTO> create(String  authorization, RestaurantDTO restaurantDTO) {
 		Restaurant restaurant = RestaurantMapper.MAPPER.makeRestaurant(restaurantDTO);
 		restaurant.setId(null);
 		restaurant = restaurantRepository.save(restaurant);
@@ -33,7 +33,7 @@ public class RestaurantsApiDelegateImpl implements RestaurantsApiDelegate {
 	}
 
 	@Override
-	public ResponseEntity<Void> delete(UUID restaurantId) {
+	public ResponseEntity<Void> delete(String  authorization, UUID restaurantId) {
 		Optional<Restaurant> restaurant = restaurantRepository.findById(restaurantId);
 		if(restaurant.isPresent()) {
 			restaurantRepository.delete(restaurant.get());
@@ -42,7 +42,7 @@ public class RestaurantsApiDelegateImpl implements RestaurantsApiDelegate {
 	}
 
 	@Override
-	public ResponseEntity<List<RestaurantDTO>> getAll() {
+	public ResponseEntity<List<RestaurantDTO>> getAll(String  authorization) {
 		
 		Iterable<Restaurant> restaurants = restaurantRepository.findAll();
 
@@ -51,7 +51,7 @@ public class RestaurantsApiDelegateImpl implements RestaurantsApiDelegate {
 	}
 
 	@Override
-	public ResponseEntity<RestaurantDTO> getById(UUID restaurantId) {
+	public ResponseEntity<RestaurantDTO> getById(String  authorization, UUID restaurantId) {
 		Optional<Restaurant> restaurant = restaurantRepository.findById(restaurantId);
 		if(restaurant.isPresent()) {
 			return new ResponseEntity<RestaurantDTO>( RestaurantMapper.MAPPER.makeRestaurantDTO(restaurant.get()), HttpStatus.OK);		
@@ -69,7 +69,7 @@ public class RestaurantsApiDelegateImpl implements RestaurantsApiDelegate {
 	}
 
 	@Override
-	public ResponseEntity<Void> update(UUID restaurantId, RestaurantDTO restaurantDTO) {
+	public ResponseEntity<Void> update(String  authorization, UUID restaurantId, RestaurantDTO restaurantDTO) {
 		Restaurant restaurant = RestaurantMapper.MAPPER.makeRestaurant(restaurantDTO);
 		restaurantRepository.save(restaurant);
 		return new ResponseEntity<Void>(HttpStatus.OK);

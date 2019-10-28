@@ -9,7 +9,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 @Configuration
 @EnableResourceServer
 
-@Profile("default")
+@Profile("disable")
 public class DisableSecurityConfiguration extends ResourceServerConfigurerAdapter {
 
 
@@ -17,8 +17,10 @@ public class DisableSecurityConfiguration extends ResourceServerConfigurerAdapte
     @Override
     public void configure(HttpSecurity http) throws Exception {
         // @formatter:off
-       http.csrf().disable().authorizeRequests().antMatchers("/**").permitAll().
-       and().authorizeRequests().antMatchers("/console/**").permitAll().anyRequest().authenticated();
+       http.csrf().disable()
+       .authorizeRequests().antMatchers("/restaurants/**").access("hasRole('ADMIN')").and()
+       .authorizeRequests().antMatchers("/**").permitAll().
+       and().authorizeRequests().antMatchers("/console/**").permitAll().antMatchers("/restaurants").authenticated();
 
        http.headers().frameOptions().disable();
         // @formatter:on
