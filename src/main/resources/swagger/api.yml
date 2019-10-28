@@ -1,0 +1,272 @@
+swagger: '2.0'
+info:
+  title: Restaurant Service
+  description: >-
+    This is Swagger UI environment generated for the Restaurant Service
+  version: '1.0'
+host: serverRoot
+basePath: /v1/
+schemes:
+  - https
+componentes:  
+   OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://example.com/oauth/authorize
+          tokenUrl: https://example.com/oauth/token
+          scopes:
+            read: Grants read access
+            write: Grants write access
+            admin: Grants access to admin operations
+paths:
+  '/restaurants':
+    post:
+      operationId: create
+      summary: Add a restaurant
+      consumes:
+        - application/json
+      tags:
+        - restaurants-api-controller
+      parameters:
+        - schema:
+            $ref: '#/definitions/RestaurantDTO'
+          required: true
+          in: body
+          name: restaurantDTO
+          description: Object to add a restaurant
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/RestaurantDTO'              
+        '400':
+          description: |-
+            Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not allowed
+        '409':
+          description: Conflict
+        '500':
+          description: Internal Server Error
+    get:
+      operationId: getAll
+      summary: Get all restaurants
+      tags:
+        - restaurants-api-controller
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Created
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/RestaurantDTO'              
+        '400':
+          description: |-
+            Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not allowed
+        '409':
+          description: Conflict
+        '500':
+          description: Internal Server Error
+  '/restaurants/{restaurantId}':
+    put:
+      operationId: update
+      summary: Update a restaurant
+      tags:
+        - restaurants-api-controller
+      consumes:
+        - application/json
+      parameters:
+        - in: path
+          name: restaurantId   # Note the name is the same as in the path
+          type: string
+          format: uuid
+          required: true
+        - schema:
+            $ref: '#/definitions/RestaurantDTO'
+          required: true
+          in: body
+          name: restaurantDTO
+          description: Object to update a restaurant
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: |-
+            Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not allowed
+        '409':
+          description: Conflict
+        '500':
+          description: Internal Server Error
+    delete:
+      operationId: delete
+      summary: Delete a Restaurant
+      tags:
+        - restaurants-api-controller
+      parameters:
+        - in: path
+          name: restaurantId   # Note the name is the same as in the path
+          required: true
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: |-
+            Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not allowed
+        '409':
+          description: Conflict
+        '500':
+          description: Internal Server Error
+    get:
+      operationId: getById
+      summary: Get one restaurant
+      produces:
+        - application/json
+      tags:
+        - restaurants-api-controller
+      parameters:
+        - in: path
+          name: restaurantId   # Note the name is the same as in the path
+          required: true
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/RestaurantDTO'
+        '400':
+          description: |-
+            Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not allowed
+        '409':
+          description: Conflict
+        '500':
+          description: Internal Server Error
+  '/restaurants/search':
+    get:
+      parameters:
+        - in: query
+          name: lat
+          type: number
+          format: double
+          description: your latitude position 
+        - in: query
+          name: long
+          type: number
+          format: double
+          description: your longitude position 
+        - in: query
+          name: distance
+          type: integer
+          description: max distance from your position       
+      produces:
+        - application/json
+        
+      operationId: restaurantsSearch
+      summary: Find  restaurantes near you
+      tags:
+        - restaurants-api-controller
+      responses:
+        '200':
+          description: Ok
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/RestaurantDTO'          
+        '400':
+          description: |-
+            Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '405':
+          description: Method Not allowed
+        '409':
+          description: Conflict
+        '500':
+          description: Internal Server Error
+definitions:
+  RestaurantDTO:
+    type: object
+    description: Restaurant Object
+    required: 
+      - name
+      - description
+      - lat
+      - long
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: Unique number for object
+      name:
+        type: string
+        description: Restaurant Name
+      description:
+        type: string
+        description: Restaurant Description
+      latitude:
+        type: number
+        format: double
+        description: Latitude 
+      longitude:
+        type: number
+        format: double
+        description: Longitude 
+      rating:
+        type: integer
+        minimum: 1
+        maximum: 10
+        description: Restaurant rating (1-10)
+    example:
+     id: 721d68a7-f6bb-4863-b071-0e58a50da5ae
+     name: Da Lucia
+     description: Restaurante italiano
+     lat: 52.498890 
+     long: 13.342076
+     rating: 8
