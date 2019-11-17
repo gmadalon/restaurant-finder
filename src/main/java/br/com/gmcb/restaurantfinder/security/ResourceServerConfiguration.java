@@ -65,11 +65,11 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		
-	       http.csrf().disable()
+	       http.csrf().disable().headers().frameOptions().disable().and().authorizeRequests().antMatchers("/h2-console/**").permitAll().and()
 	       .authorizeRequests().antMatchers("/restaurants/search**").permitAll().and()
 	       .authorizeRequests().antMatchers("/restaurants/**").authenticated().and()
 	       .authorizeRequests().antMatchers("/**").permitAll().
-	       and().authorizeRequests().antMatchers("/console/**").permitAll().antMatchers("/restaurants").authenticated();
+	       and().authorizeRequests().antMatchers("/restaurants").authenticated();
 
 		// @formatter:off
         //http.csrf().disable().authorizeRequests().antMatchers("/**").authenticated();
