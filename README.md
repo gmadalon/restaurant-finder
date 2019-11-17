@@ -4,6 +4,11 @@ Service to finder restaurants near you.
 It was developed using JAVA 8 and Spring boot. 
 There is authentication with Outh2.0 but the service for search is open for nonauthenticated users
 
+You can start all components using docker-compose. To do it follow the steps bellow:
+
+1 - Go to dir: restaurant-finder/src/main/resources/docker
+2 - Execute: "docker-compose up"
+
 You can get your access token using this HTTP request, I created a default user admin@admin.com:
 
 curl -X POST "http://localhost:8081/oauth/token" -H "accept: */*" -H "Authorization: Basic Z21jYmFwcDpnbWNi" -d "password=changeyourpassword&username=admin@admin.com&grant_type=password&scope=read%20write&client_secret=gmcb&client_id=gmcbapp"
